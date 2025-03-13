@@ -1,5 +1,5 @@
-import { Children } from 'react';
-import type { FC, ReactNode } from 'react';
+import { Children, isValidElement } from 'react';
+import type { FC, ReactNode, JSXElementConstructor } from 'react';
 import { Component1 } from './Component1';
 import { Component2 } from './Component2';
 
@@ -12,31 +12,16 @@ type CompoundComponentProps = {
   Component2: typeof Component2;
 };
 
-const getDisplayName = (value: unknown) => {
-  if (
-    value &&
-    typeof value === 'object' &&
-    'type' in value &&
-    typeof value.type === 'function' &&
-    'displayName' in value.type &&
-    typeof value.type.displayName === 'string'
-  ) {
-    return value.type.displayName;
-  }
-
-  return '';
-}
-
 const CompoundComponent: FC<Props> & CompoundComponentProps = ({ children }) => {
-  const allowedChildren = ['Component1', 'Component2'];
+  const allowedChildren: Array<string | JSXElementConstructor<never>> = [Component1,  Component2];
   const childrenArray = Children.toArray(children);
 
   const isUnknownChildrenPresent = childrenArray.some((child) => {
-    return !allowedChildren.includes(getDisplayName(child));
-  });
+    if (!isValidElement(child)) {
+      return true;
+    }
 
-  Children.forEach(children, (child, idx) => {
-    console.log(idx, getDisplayName(child));
+    return !allowedChildren.includes(child.type);
   });
 
   if (isUnknownChildrenPresent) {
