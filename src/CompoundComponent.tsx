@@ -21,7 +21,7 @@ const getDisplayName = (value: unknown) => {
     'displayName' in value.type &&
     typeof value.type.displayName === 'string'
   ) {
-    return value?.type?.displayName;
+    return value.type.displayName;
   }
 
   return '';
