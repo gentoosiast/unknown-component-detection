@@ -7,7 +7,9 @@ function App() {
   return (
     <CompoundComponent>
       <CompoundComponent.Component1 />
-      <CompoundComponent.Component2 />
+      <CompoundComponent.Component2>
+        hello, it's component 2
+      </CompoundComponent.Component2>
     </CompoundComponent>
   );
 }

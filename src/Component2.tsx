@@ -1,6 +1,17 @@
-import type { FC } from 'react';
+import type { FC, ReactNode } from 'react';
 
-const Component2: FC = () => (<p>Component2</p>);
+type Props = {
+  children: ReactNode;
+};
+
+const Component2: FC<Props> = ({ children }) => (
+  <>
+    <p>
+      Component2
+    </p>
+    {children}
+  </>
+);
 
 Component2.displayName = 'Component 2';
 

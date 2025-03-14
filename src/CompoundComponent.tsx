@@ -1,5 +1,5 @@
-import { Children, isValidElement } from 'react';
-import type { FC, ReactNode, JSXElementConstructor } from 'react';
+import type { FC, ReactNode } from 'react';
+import { useValidateChildren } from './hooks/useValidateChildren';
 import { Component1 } from './Component1';
 import { Component2 } from './Component2';
 
@@ -13,24 +13,11 @@ type CompoundComponentProps = {
 };
 
 const CompoundComponent: FC<Props> & CompoundComponentProps = ({ children }) => {
-  const allowedChildren: Array<string | JSXElementConstructor<never>> = [Component1,  Component2];
-  const childrenArray = Children.toArray(children);
-
-  const isUnknownChildrenPresent = childrenArray.some((child) => {
-    if (!isValidElement(child)) {
-      return true;
-    }
-
-    return !allowedChildren.includes(child.type);
-  });
-
-  if (isUnknownChildrenPresent) {
-    return <p>Unknown children are detected</p>
-  }
+  const validatedChildren = useValidateChildren(children, [Component1, Component2]);
 
   return (
     <div>
-      {children}
+      {validatedChildren}
     </div>
   );
 };
