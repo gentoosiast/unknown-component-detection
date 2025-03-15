@@ -1,29 +1,33 @@
 import type { FC, ReactNode } from 'react';
-import { useValidateChildren } from './hooks/useValidateChildren';
-import { Component1 } from './Component1';
-import { Component2 } from './Component2';
+import { useAllowedComponents } from './hooks/useAllowedComponents';
+import { ComponentWithDisplayName } from './ComponentWithDisplayName';
+import { ComponentWithoutDisplayName } from './ComponentWithoutDisplayName';
 
 type Props = {
   children: ReactNode;
 };
 
 type CompoundComponentProps = {
-  Component1: typeof Component1;
-  Component2: typeof Component2;
+  Component1: typeof ComponentWithDisplayName;
+  Component2: typeof ComponentWithoutDisplayName;
 };
 
 const CompoundComponent: FC<Props> & CompoundComponentProps = ({ children }) => {
-  const validatedChildren = useValidateChildren(children, [Component1, Component2]);
+  const inconsistent = useAllowedComponents(children, [ComponentWithDisplayName, ComponentWithoutDisplayName]);
+
+  if (inconsistent) {
+    return inconsistent
+  }
 
   return (
     <div>
-      {validatedChildren}
+      {children}
     </div>
   );
 };
 
-CompoundComponent.Component1 = Component1;
-CompoundComponent.Component2 = Component2;
+CompoundComponent.Component1 = ComponentWithDisplayName;
+CompoundComponent.Component2 = ComponentWithoutDisplayName;
 
 export { CompoundComponent }
 

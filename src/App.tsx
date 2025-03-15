@@ -1,9 +1,9 @@
 import { CompoundComponent } from './CompoundComponent';
-import { Component3 } from './Component3';
+import { UnknownComponent } from './UnknownComponent';
 import './App.css'
 
 function App() {
-  // pass Component3 as child and see what happens
+  // pass UnknownComponent or text string as a child and see what happens
   return (
     <CompoundComponent>
       <CompoundComponent.Component1 />

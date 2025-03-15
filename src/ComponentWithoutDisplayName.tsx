@@ -4,7 +4,7 @@ type Props = {
   children: ReactNode;
 };
 
-const Component2: FC<Props> = ({ children }) => (
+const ComponentWithoutDisplayName: FC<Props> = ({ children }) => (
   <>
     <p>
       Component2
@@ -13,6 +13,4 @@ const Component2: FC<Props> = ({ children }) => (
   </>
 );
 
-Component2.displayName = 'Component 2';
-
-export { Component2 };
+export { ComponentWithoutDisplayName };
